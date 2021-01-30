@@ -31,18 +31,19 @@
 
         <div class="booking-content">
             <h1>Cruise Queen</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book./p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
         </div>
 
 
         <div class="booking-form">
+            <div id="order-item" style="display: block;">
             <h3>Book Ocean Time</h3>
             <div class="input-group">
-                <label for="">Flying From</label>
-                <input class="inp-style" type="text" name="" placeholder="Dhake, Bangladesh">
+                <label for="">Sailing From</label>
+                <input class="inp-style" type="text" name="" placeholder="Dhaka, Bangladesh">
             </div>
             <div class="input-group">
-                <label for="">Flying To</label>
+                <label for="">Sailing To</label>
                 <input class="inp-style" type="text" name="" placeholder="New York, United States">
             </div>
             <div class="inputs">
@@ -58,20 +59,22 @@
             <div class="input-group f-class">
                 <div>
                     <label for="">First Class ($150)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="first-class-input" class="inp-style inp-width" type="number" name="">
                 </div>
-                <div class="plus-minus-btn">
-                    <p>+ -</p>
+                <div class="button-section">
+                    <button onclick="ticketCounter('first-class-input', 'plus')">+</button>
+                    <button onclick="ticketCounter('first-class-input', 'minus')">-</button>
                 </div>
             </div>
             
             <div class="input-group f-class">
                 <div>
                     <label for="">Economy ($100)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="econ-class-input" class="inp-style inp-width" type="number" name="">
                 </div>
-                <div class="plus-minus-btn">
-                    <p> <span>+</span> <span>-</span> </p>
+                <div class="button-section">
+                    <button onclick="ticketCounter('econ-class-input', 'plus')">+</button>
+                    <button onclick="ticketCounter('econ-class-input', 'minus')">-</button>
                 </div>
             </div>
             <div class="calculations">
@@ -80,7 +83,7 @@
                         <p>Subtotal</p>
                     </div>
                     <div class="right">
-                        <p>$500</p>
+                        <p>$<span id="sub-total">000</span></p>
                     </div>
                 </div>
 
@@ -89,7 +92,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$50</p>
+                        <p>$<span id="vat">00</span></p>
                     </div>
                 </div>
                 <hr>
@@ -98,14 +101,63 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$550</p>
+                        <p>$<span id="total">000</span></p>
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button id="submit" class="btn-style">Book Now</button>
+            </div>
+            <div id="confirmation" style="display: none;">
+            <p>Thanks for choosing</p><h2>CRUISE QUEEN</h2><p>Your order has been placed!</p>
+            <button id="return">Order More</button>
+            </div>
+            
         </div>
     </main>
+    <script>
+        // Setting initial ticket numbers to zero 
+        document.getElementById('first-class-input').value = 0;
+        document.getElementById('econ-class-input').value = 0;
 
+        // Total bill calculation
+        function totalBill(){
+            const firstClassCount = parseInt(document.getElementById('first-class-input').value);
+            const econClassCount = parseInt(document.getElementById('econ-class-input').value);
+            const subTotal = (firstClassCount*150)+(econClassCount*100);
+            document.getElementById('sub-total').innerText = subTotal;
+            const vat = subTotal*0.1;
+            document.getElementById('vat').innerText = vat;
+            const total = subTotal+vat;
+            document.getElementById('total').innerText = total;
+        }
+
+        // Tracking number of tickets
+        function ticketCounter(id, action){
+            const currentInput = document.getElementById(id).value;
+            if(currentInput > 0 && action == 'minus'){
+                var newInput = parseInt(currentInput)-1;
+            }
+            else if(action == 'plus'){
+                var newInput = parseInt(currentInput)+1;
+            }
+            else{
+                newInput = 0;
+            }
+            document.getElementById(id).value = newInput;
+            totalBill();
+        }
+
+        // Adding event listner for "Book Now" & "Order More" buttons
+        document.getElementById("submit").addEventListener("click", function(){
+            document.getElementById('order-item').style.display = "none";
+            document.getElementById('confirmation').style.display = "block";
+        })
+
+        document.getElementById("return").addEventListener("click", function(){
+            document.getElementById('order-item').style.display = "block";
+            document.getElementById('confirmation').style.display = "none";
+        })
+    </script>
     <!--Thank You-->
 </body>
 
