@@ -136,19 +136,19 @@ a.active {
   margin-top: 30px;
 }
 
-button {
+.button-section button {
   padding: 0px 5px;
   border-radius: 5px;
-  background-color: ivory;
+  background-color: #e33741;
   border: none;
   height: 25px;
-  width: 25px;
-  font-weight: bold;
-  box-shadow: 1px 1px 5px grey;
+  width: 30px;
+  box-shadow: 1px 1px 5px tomato;
   font-size: large;
-  color: gray;
+  color: ivory;
 }
 
-button:hover {
-  color: tomato;
+.button-section button:hover {
+  font-weight: bolder;
+  box-shadow: 3px 3px 2px tomato;
 }
